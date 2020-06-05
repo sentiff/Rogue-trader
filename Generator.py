@@ -5,6 +5,11 @@
 import pandas
 import random
 
+
+def roll(up,down):
+    random.randrange(up, down)
+    
+
 df = pandas.read_csv('System.csv', sep=';')
 
 #print (df)
@@ -108,8 +113,11 @@ else:
     
 print ('Number of objects in outer reaches is:\t', outer_objects)
         
+#inner_features - table with objects in inner cauldron
 
+inner_features = pandas.read_csv('Inner Cauldron.tsv', sep = '\t')
 
+inner_list = []
 
 
 
