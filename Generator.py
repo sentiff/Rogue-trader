@@ -5,11 +5,6 @@
 import pandas
 import random
 
-
-def roll(up,down):
-    random.randrange(up, down)
-    
-
 df = pandas.read_csv('System.csv', sep=';')
 
 #print (df)
@@ -55,7 +50,7 @@ while random_star > stt.at[star_row, 'Range2']:
         break
     
 print ('Star type:\t\t',stt.at[star_row, 'Class'])
-print ('Star description:', '\n',stt.at[star_row, 'Description'])
+print ('Star description:', '\n',stt.at[star_row, 'Description'], '\n')
 
 inner_flag = stt.at[star_row, 'Inner']
 biosphere_flag = stt.at[star_row, 'Biosphere']
@@ -66,7 +61,7 @@ life_flag = stt.at[star_row, 'Natural Life']
 print ('Inner Cauldron:\t\t\t\t', inner_flag)
 print ('Primary biosphere: \t\t\t', biosphere_flag)
 print ('Outer reaches: \t\t\t\t', outer_flag)
-print ('Possible natural life in the system: \t', life_flag)
+print ('Possible natural life in the system: \t', life_flag, '\n')
 
 #inner cauldron objects
 inner_objects = 0
@@ -81,7 +76,7 @@ elif inner_flag == 'Dominant':
 else:
     inner_objects = 0
     
-print ('Number of objects in Inner Cauldron is\t', inner_objects)
+#print ('Number of objects in Inner Cauldron is\t', inner_objects)
 
 #primary biosphere objects
 biosphere_objects = 0
@@ -96,7 +91,7 @@ elif biosphere_flag == 'Dominant':
 else:
     biosphere_objects = 0
     
-print ('Number of primary biosphere objects is:\t', biosphere_objects)
+#print ('Number of primary biosphere objects is:\t', biosphere_objects)
 
 #outer reaches objects
 outer_objects = 0
@@ -111,7 +106,7 @@ elif outer_flag == 'Dominant':
 else:
     outer_objects = 0
     
-print ('Number of objects in outer reaches is:\t', outer_objects)
+#print ('Number of objects in outer reaches is:\t', outer_objects, '\n')
         
 #inner_features - table with objects in inner cauldron
 
@@ -119,5 +114,64 @@ inner_features = pandas.read_csv('Inner Cauldron.tsv', sep = '\t')
 
 inner_list = []
 
+def system_feature (roll1, roll2, source_table):
+    result = random.randrange(roll1, roll2)
+    feature_row = 0
+    while result > int(source_table.at[feature_row, 'Range2']):
+        feature_row += 1
+        if random_star == 100:
+            feature_row = source_table.size
+            break
+    return source_table.at[feature_row, 'Element']
+    
+ 
+#Test funkcji
+    
+#feature_test = system_feature(1, 101, inner_features, 'range2')
+#
+#print (feature_test)
+    
+#test udany!
 
+for i in range(inner_objects):
+    inner_list.append(system_feature(1,101,inner_features))
+    
+print ('Features in inner cauldron: ')
 
+for i in inner_list:
+    if len(inner_list) == 0:
+        print ('No features in inner cauldron')
+    else:
+        if i != 'Nothing':
+            print ('\t\t\t\t\t', i)
+
+biosphere_table = pandas.read_csv('Biosphere.tsv', '\t')
+biosphere_list = []
+
+for i in range(biosphere_objects):
+    biosphere_list.append(system_feature(1,101,inner_features))
+    
+print ('Features in primary biosphere: ')
+
+for i in biosphere_list:
+    if len(biosphere_list) == 0:
+        print ('No features in primary biosphere')
+    else:
+        if i != 'Nothing':
+            print ('\t\t\t\t\t', i)
+
+outer_table = pandas.read_csv('Outer Reaches.tsv', '\t')
+outer_list = []
+
+for i in range(outer_objects):
+    outer_list.append(system_feature(1,101,outer_table))
+    
+print ('Features in outer reaches: ')
+
+for i in outer_list:
+    if len(outer_list) == 0:
+        print ('No features in outer reaches')
+    else:
+        if i != 'Nothing':
+            print ('\t\t\t\t\t', i)
+            
