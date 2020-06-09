@@ -175,3 +175,5 @@ for i in outer_list:
         if i != 'Nothing':
             print ('\t\t\t\t\t', i)
             
+import stellar_classes
+
